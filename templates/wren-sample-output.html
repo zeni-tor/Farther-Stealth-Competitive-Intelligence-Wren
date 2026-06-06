@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wren · Weekly Intelligence Brief · June 5, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #f5f4ef;
+    --surface: #ffffff;
+    --ink: #1c1c18;
+    --ink-mid: #5a5a52;
+    --ink-dim: #9a9a90;
+    --rule: #ddddd4;
+    --rule-dark: #b8b8ac;
+    --wren: #3d6b4f;
+    --wren-light: #edf4ef;
+    --wren-mid: #c0d9c8;
+    --alert-red: #8b2e2e;
+    --alert-red-bg: #fdf2f2;
+    --alert-red-rule: #e8c4c4;
+    --amber: #7a5200;
+    --amber-bg: #fdf8ee;
+    --amber-rule: #e8d8a0;
+    --blue: #1e3d6b;
+    --blue-bg: #f0f4fb;
+    --blue-rule: #b8ccec;
+    --mono: 'DM Mono', monospace;
+    --serif: 'Spectral', Georgia, serif;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* ── MASTHEAD ── */
+  .masthead {
+    background: var(--ink);
+    color: #f5f4ef;
+    padding: 36px 56px 28px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .masthead-left .wren-name {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--wren);
+    margin-bottom: 6px;
+  }
+  .masthead-left h1 {
+    font-size: 24px;
+    font-weight: 300;
+    font-style: italic;
+    color: #f5f4ef;
+    line-height: 1.2;
+  }
+  .masthead-right {
+    text-align: right;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #6a6a60;
+    line-height: 1.9;
+  }
+
+  /* ── STATS BAR ── */
+  .stats-bar {
+    background: #252520;
+    padding: 10px 56px;
+    display: flex;
+    gap: 28px;
+    flex-wrap: wrap;
+    align-items: center;
+    border-bottom: 1px solid #3a3a30;
+  }
+  .stat {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #6a6a60;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat .n { color: #f5f4ef; font-size: 13px; font-weight: 500; }
+  .stat-div { width: 1px; height: 14px; background: #3a3a30; }
+
+  /* ── WREN NOTE ── */
+  .wren-note {
+    background: var(--wren-light);
+    border-left: 3px solid var(--wren);
+    padding: 14px 56px;
+    font-size: 13px;
+    color: var(--wren);
+    font-family: var(--mono);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+  }
+  .wren-note .label { font-weight: 500; white-space: nowrap; margin-top: 1px; }
+
+  /* ── BODY ── */
+  .body { max-width: 860px; margin: 0 auto; padding: 44px 56px 80px; }
+
+  /* ── LAYER HEADER ── */
+  .layer {
+    margin-bottom: 52px;
+  }
+  .layer-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 6px;
+  }
+  .layer-tag {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+  .tag-national { background: var(--ink); color: #f5f4ef; }
+  .tag-hawaii { background: var(--wren); color: #f5f4ef; }
+  .layer-name { font-size: 20px; font-weight: 400; color: var(--ink); }
+  .layer-sub {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    margin-bottom: 20px;
+    padding-left: 2px;
+  }
+  .layer-rule { height: 1px; background: var(--ink); margin-bottom: 24px; }
+
+  /* ── COMPETITOR BLOCK ── */
+  .competitor { margin-bottom: 36px; }
+  .comp-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule-dark);
+  }
+  .comp-name { font-size: 16px; font-weight: 500; color: var(--ink); }
+  .comp-aka {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+  }
+  .comp-count {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--ink-dim);
+    background: var(--bg);
+    border: 1px solid var(--rule);
+    padding: 2px 8px;
+    border-radius: 3px;
+  }
+
+  /* ── FINDING ── */
+  .finding {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 16px;
+  }
+  .finding:last-child { border-bottom: none; }
+  .finding-meta { padding-top: 2px; }
+  .cert-badge {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 6px;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 6px;
+    border: 1px solid transparent;
+  }
+  .c-confirmed { background: #edf4ef; color: #2a5c3a; border-color: #b0d4bc; }
+  .c-inferred  { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-rule); }
+  .c-speculative { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-rule); }
+  .c-flag { background: var(--alert-red-bg); color: var(--alert-red); border-color: var(--alert-red-rule); }
+  .c-gap { background: #f5f4ef; color: var(--ink-dim); border-color: var(--rule); }
+
+  .finding-priority {
+    font-family: var(--mono);
+    font-size: 9px;
+    letter-spacing: 0.06em;
+    color: var(--ink-dim);
+    text-transform: uppercase;
+  }
+  .p-high { color: var(--alert-red); }
+  .p-medium { color: var(--amber); }
+  .p-low { color: var(--ink-dim); }
+
+  .finding-body {}
+  .finding-title {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 4px;
+    line-height: 1.4;
+  }
+  .finding-desc {
+    font-size: 13px;
+    color: var(--ink-mid);
+    line-height: 1.65;
+    margin-bottom: 6px;
+  }
+  .finding-desc em { font-style: italic; color: var(--ink); }
+  .finding-source {
+    font-family: var(--mono);
+    font-size: 10px;
+    color: var(--ink-dim);
+  }
+  .finding-source a { color: var(--blue); text-decoration: none; }
+  .finding-source a:hover { text-decoration: underline; }
+  .finding-action {
+    margin-top: 8px;
+    font-size: 12px;
+    color: var(--amber);
+    font-family: var(--mono);
+    padding: 6px 10px;
+    background: var(--amber-bg);
+    border: 1px solid var(--amber-rule);
+    border-radius: 3px;
+    line-height: 1.5;
+  }
+  .finding-action strong { font-size: 9px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 2px; }
+
+  /* ── BASELINE GAP BOX ── */
+  .gap-box {
+    background: var(--bg);
+    border: 1px dashed var(--rule-dark);
+    border-radius: 6px;
+    padding: 16px 20px;
+    margin-bottom: 12px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--ink-dim);
+    line-height: 1.7;
+  }
+  .gap-box strong { color: var(--ink-mid); display: block; margin-bottom: 4px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* ── SECTION DIVIDER ── */
+  .section-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin: 28px 0 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--rule);
+  }
+
+  /* ── SLACK PREVIEW ── */
+  .slack-preview {
+    background: #1a1d21;
+    border-radius: 8px;
+    padding: 24px 28px;
+    margin-bottom: 48px;
+    font-family: var(--mono);
+    font-size: 12px;
+    color: #d1d2d3;
+    line-height: 1.8;
+  }
+  .slack-preview .slack-header {
+    font-size: 11px;
+    color: #6a6a70;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .slack-channel { color: #4a9eda; }
+  .slack-bot { color: #7c8b9a; }
+  .slack-preview .bold { color: #ffffff; font-weight: 500; }
+  .slack-preview .green { color: #4CAF7A; }
+  .slack-preview .amber { color: #e8a44a; }
+  .slack-preview .red { color: #e07070; }
+  .slack-preview .dim { color: #6a6a70; }
+  .slack-divider { border: none; border-top: 1px solid #2e3238; margin: 12px 0; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    color: #5a5a52;
+    padding: 20px 56px;
+    font-family: var(--mono);
+    font-size: 11px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  footer span { color: var(--wren); }
+</style>
+</head>
+<body>
+
+<!-- ── MASTHEAD ── -->
+<div class="masthead">
+  <div class="masthead-left">
+    <div class="wren-name">Wren · Stealth Competitor Intelligence</div>
+    <h1>Weekly Intelligence Brief</h1>
+  </div>
+  <div class="masthead-right">
+    Week of May 30 – June 5, 2026<br>
+    Farther Institutional · Internal use only<br>
+    Honesty standard: Confirmed / Inferred / Speculative
+  </div>
+</div>
+
+<!-- ── STATS BAR ── -->
+<div class="stats-bar">
+  <div class="stat"><span class="n">31</span> signals processed</div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="n">5</span> High</div>
+  <div class="stat"><span class="n">11</span> Medium</div>
+  <div class="stat"><span class="n">8</span> Low</div>
+  <div class="stat"><span class="n">7</span> Discarded</div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="n">4</span> competitors monitored</div>
+  <div class="stat"><span class="n">1</span> behavioral flag active</div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="n">2</span> Hawaii baselines pending first sweep</div>
+</div>
+
+<!-- ── WREN NOTE ── -->
+<div class="wren-note">
+  <div class="label">Wren —</div>
+  <div>eCIO findings are richer this week because baseline data exists from prior sweeps. Morgan Stanley and Mariner sections are thinner — this reflects a first-sweep gap, not absence of activity. Confidence will improve as Hawaii baselines accumulate. UBS has one High Priority signal this week that warrants attention.</div>
+</div>
+
+<div class="body">
+
+  <!-- ── SLACK PREVIEW ── -->
+  <div class="section-label">Slack summary — delivered to #institutional-intel</div>
+  <div class="slack-preview">
+    <div class="slack-header">
+      <span class="slack-channel">#institutional-intel</span>
+      <span class="slack-bot">Wren · Today at 8:02 AM HST</span>
+    </div>
+
+    <div><span class="bold">🪶 Wren · Weekly Brief · June 5, 2026</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">eCIO (National)</span></div>
+    <div><span class="red">🔴 High</span> — RFP dual-track strategy fully mapped. Portal live at same time as skip-the-RFP content. Contradiction confirmed. <span class="dim">getecio.com</span></div>
+    <div><span class="amber">🟡 Medium</span> — May market commentary published, monthly cadence confirmed. Rob Roquitte, CFA. <span class="dim">getecio.com/resource-center</span></div>
+    <div><span class="amber">🟡 Medium</span> — eVestech now licensed to other RIAs. Possible platform expansion. <span class="dim">linkedin.com/company/getecio</span></div>
+    <div><span class="green">🟢 Low</span> — IPS guide promoted on LinkedIn. Lead capture CTA. No new behavioral pattern.</div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">UBS · Hawaii Ascendant Wealth Consultants</span></div>
+    <div><span class="red">🔴 High</span> — New Hawaii-specific sponsored content detected in LinkedIn Ad Library. Targeting filter: "Investment committee members, Hawaii." First confirmed paid campaign this year. <span class="dim">LinkedIn Ad Library · retrieved Jun 4</span></div>
+    <div><span class="amber">🟡 Medium</span> — "Start the Conversation" lead form updated. Now asks: "Do you currently work with a financial advisor?" — switcher segmentation confirmed. <span class="dim">advisors.ubs.com/hawaiiascendantwealth</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Morgan Stanley · Hawaii Planning Group</span></div>
+    <div><span class="amber">🟡 Medium</span> — Forbes Best-in-State Wealth Advisor award promoted on LinkedIn (2025 list). 3 advisors named. High engagement from local board members. <span class="dim">LinkedIn · Jun 2</span></div>
+    <div><span class="dim">⚠ Baseline thin — first sweep. Two signals processed, one discarded. Confidence will improve.</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Mariner Wealth Advisors</span></div>
+    <div><span class="amber">🟡 Medium</span> — New "Reset" podcast episode published. Topic: tax planning for nonprofit reserves. Direct relevance to endowment audience. <span class="dim">marinerwealthadvisors.com/insights</span></div>
+    <div><span class="dim">⚠ Baseline thin — first sweep. No "Word of the Year" campaign activity detected this week.</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="dim">Full report attached · Next sweep: June 12 · Questions: mention @Wren</span></div>
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- LAYER 1: NATIONAL                        -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="layer">
+    <div class="layer-header">
+      <div class="layer-tag tag-national">National</div>
+      <div class="layer-name">eCIO</div>
+    </div>
+    <div class="layer-sub">getecio.com · Madison, WI · CRD# 301432 · Nonprofit-only RIA · Standing behavioral flag active</div>
+    <div class="layer-rule"></div>
+
+    <div class="section-label">RFP activity</div>
+
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">RFP submission portal live alongside skip-the-RFP content — contradiction confirmed</div>
+          <div class="finding-desc">eCIO operates a public RFP submission form inviting formal proposals, while simultaneously publishing content coaching nonprofits to consider bypassing the RFP process entirely. Both assets are actively promoted. The pattern indicates a deliberate dual-track acquisition strategy: compete formally where already in consideration, intercept prospects informally before a process begins.</div>
+          <div class="finding-source">Source: <a href="https://www.getecio.com/submit-an-investment-management-request-for-proposal-rfp">getecio.com/rfp-submit</a> + <a href="https://www.getecio.com/resources/should-you-issue-an-rfp-to-select-your-next-investment-advisor">getecio.com/should-you-rfp</a> · retrieved Jun 2026</div>
+          <div class="finding-action"><strong>Worth considering</strong> Whether Farther Institutional should publish transparent guidance on when RFPs benefit nonprofits — positioning as the governance-first option.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-inferred">Inferred</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">No public RFP awards found in SAM.gov this week</div>
+          <div class="finding-desc">Consistent with prior sweeps. The pattern indicates eCIO wins clients through private nonprofit RFPs and direct-hire, not federal procurement.</div>
+          <div class="finding-source">Source: SAM.gov search — "eCIO investment advisory" · retrieved Jun 5, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Thought leadership</div>
+
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">May 2026 market commentary published — monthly video cadence confirmed</div>
+          <div class="finding-desc">Rob Roquitte, CFA delivered the May market commentary. Monthly video format targeted at nonprofit boards. Low production cost, high board-member relevance, reinforces advisor-as-partner positioning.</div>
+          <div class="finding-source">Source: <a href="https://getecio.com/resource-center/home">getecio.com/resource-center</a> · retrieved Jun 2026</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">eVestech platform now licensed to other RIAs</div>
+          <div class="finding-desc">eCIO describes eVestech as "the industry's first communication platform designed specifically for nonprofit organizations" and confirms it is now used by other investment advisors. This suggests eCIO may be evolving from a pure advisory firm into a software-enabled platform. Worth monitoring whether this becomes a distribution channel or a competitive moat.</div>
+          <div class="finding-source">Source: <a href="https://www.linkedin.com/company/getecio">linkedin.com/company/getecio</a> · company description · retrieved Jun 2026</div>
+          <div class="finding-action"><strong>Worth investigating</strong> Which RIAs are licensing eVestech — if competing firms are using eCIO's own infrastructure, that's an unusual intelligence opportunity.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-label">Behavioral pattern — standing flag</div>
+
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-flag">⚑ Pattern</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">RFP funnel — updated this week, confidence: High</div>
+          <div class="finding-desc">New evidence this week strengthens the standing flag. The complete funnel is now mapped as five steps: nonprofit searches for RFP guidance → finds eCIO's free template (gated, captures contact) → encounters "should you RFP?" content → eCIO frames its own evaluation criteria in the process guide → nonprofit submits RFP directly to eCIO via the submission portal. All five steps confirmed from primary sources.</div>
+          <div class="finding-source">Sources: getecio.com/resource-center/rfp-resources · getecio.com/should-you-rfp · getecio.com/rfp-submit · retrieved Jun 2026</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- LAYER 2: HAWAII                          -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="layer">
+    <div class="layer-header">
+      <div class="layer-tag tag-hawaii">Hawaii</div>
+      <div class="layer-name">Local Competitors</div>
+    </div>
+    <div class="layer-sub">Morgan Stanley · UBS · Mariner Wealth Advisors · First sweep — baselines being established</div>
+    <div class="layer-rule"></div>
+
+    <!-- UBS -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">UBS</div>
+        <div class="comp-aka">Hawaii Ascendant Wealth Consultants</div>
+        <div class="comp-count">2 findings · 1 High</div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Hawaii-specific LinkedIn ad detected — targeting investment committee members</div>
+          <div class="finding-desc">A sponsored post from UBS Hawaii Ascendant Wealth Consultants was found in the LinkedIn Ad Library this week, with audience targeting set to include investment committee members in Hawaii. This is the first confirmed paid campaign from this firm detected this year. The pattern suggests UBS is actively investing in paid acquisition for the institutional Hawaii market — not just organic content.</div>
+          <div class="finding-source">Source: LinkedIn Ad Library · search: "UBS Hawaii Ascendant" · retrieved Jun 4, 2026</div>
+          <div class="finding-action"><strong>Worth considering</strong> Whether Farther Institutional is running comparable LinkedIn targeting for Hawaii institutional decision-makers. If UBS is buying visibility in this audience and Farther is not, this is a paid share-of-voice gap.</div>
+        </div>
+      </div>
+
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">"Start the Conversation" lead form updated — now segments switchers immediately</div>
+          <div class="finding-desc">UBS Hawaii's lead form now includes the question: <em>"Do you currently work with a financial advisor?"</em> immediately on the first screen. This is a deliberate switcher-segmentation tactic — prospects who already have an advisor are likely in a different sales track than first-time seekers. The pattern indicates UBS is actively targeting advisor-switching nonprofits, not just net-new relationships.</div>
+          <div class="finding-source">Source: <a href="https://advisors.ubs.com/hawaiiascendantwealth/">advisors.ubs.com/hawaiiascendantwealth</a> · retrieved Jun 3, 2026</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MORGAN STANLEY -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Morgan Stanley</div>
+        <div class="comp-aka">Hawaii Planning Group</div>
+        <div class="comp-count">1 finding · first sweep</div>
+      </div>
+
+      <div class="gap-box">
+        <strong>Baseline note</strong>
+        First sweep. Two signals processed, one discarded (general market commentary not Hawaii-specific). One Medium finding below. Confidence in Morgan Stanley coverage will improve over 2–3 sweep cycles as baseline accumulates. Thin findings reflect data gap, not absence of activity.
+      </div>
+
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Forbes Best-in-State award promoted on LinkedIn — high engagement from local board members</div>
+          <div class="finding-desc">Morgan Stanley Hawaii Planning Group promoted three advisors named to the Forbes Best-in-State Wealth Advisors 2025 list on LinkedIn. The post received notable engagement from accounts that appear to be local nonprofit board members and institutional trustees. Award-based social proof is Morgan Stanley Hawaii's primary trust-building mechanism with risk-averse institutional clients.</div>
+          <div class="finding-source">Source: Morgan Stanley Hawaii Planning Group LinkedIn · post Jun 2, 2026</div>
+          <div class="finding-action"><strong>Worth investigating</strong> Whether Farther Institutional advisors are eligible for or pursuing similar regional rankings — Forbes, Barron's, or InvestmentNews. If Morgan Stanley is owning the "validated by third parties" positioning locally, Farther needs a counter-signal.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MARINER -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Mariner Wealth Advisors</div>
+        <div class="comp-aka">—</div>
+        <div class="comp-count">1 finding · first sweep</div>
+      </div>
+
+      <div class="gap-box">
+        <strong>Baseline note</strong>
+        First sweep. Three signals processed, two discarded (national content, not Hawaii-specific). No "Word of the Year" brand campaign activity detected this week — this may be seasonal or may have concluded. Will monitor for re-emergence. One Medium finding below.
+      </div>
+
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">New "Reset" podcast episode published — topic: tax planning for nonprofit reserves</div>
+          <div class="finding-desc">Mariner published a new episode of their educational "Reset" podcast series covering tax planning strategies for nonprofit reserve funds. The topic is directly relevant to endowment and foundation investment committees. This content format — educational, accessible, not sales-focused — is consistent with the blueprint's assessment of Mariner's strategy: simplifying complex financial messaging into digestible board-member content.</div>
+          <div class="finding-source">Source: <a href="https://www.marinerwealthadvisors.com/insights/">marinerwealthadvisors.com/insights</a> · retrieved Jun 3, 2026</div>
+          <div class="finding-action"><strong>Worth considering</strong> Whether Farther Institutional produces audio or short-form educational content for nonprofit board members. Mariner is owning the "accessible financial education" format in this market.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <div><span>Wren</span> · Stealth Competitor Intelligence Agent · Farther Institutional</div>
+  <div>Honesty standard applied throughout · Read honesty.md before acting on findings</div>
+  <div>Generated June 5, 2026 · Next sweep: June 12, 2026</div>
+</footer>
+
+</body>
+</html>
