@@ -10,15 +10,14 @@
 
 | Tier | Firms | Depth |
 |---|---|---|
-| A | #31–50 | Full weekly sweep — all 12 channels |
+| A | #31–51 | Full weekly sweep — all 12 channels |
 | B | #11–30 | High Priority signals only |
 | C | #1–10 | High Priority signals only |
-| Layer 1 | eCIO | Full weekly sweep — four dedicated sections + standing behavioral flag |
-| Hawaii | Morgan Stanley · UBS · Mariner | Full weekly sweep — Channel 10 dedicated |
+| Hawaii | Morgan Stanley · UBS · Mariner | Full weekly sweep — signals surface via Channels 6 and 12 |
 
 ---
 
-## Tier A — Direct competitors (#31–50)
+## Tier A — Direct competitors (#31–51)
 High-touch service, specialized investment models, overlapping nonprofit client base.
 These are Farther's most direct competitors.
 
@@ -44,6 +43,7 @@ These are Farther's most direct competitors.
 | 48 | Slocum | Now part of Pavilion/Mercer |
 | 49 | Spider Management Company | |
 | 50 | Rockefeller Capital Management | |
+| 51 | eCIO | Nonprofit-only RIA · Madison WI · CRD# 301432 · getecio.com · Standing behavioral flag active (FLAG-001) |
 
 ---
 
@@ -90,13 +90,6 @@ Managing >$100B in discretionary OCIO assets. High Priority signals only.
 | 8 | SEI Institutional Group | |
 | 9 | CAPTRUST | Rapidly climbing via acquisitions · Stillwater acquired May 2026 · Carnegie talks pending |
 | 10 | State Street Global Advisors | |
-
----
-
-## Layer 1 — National priority
-| Firm | Notes |
-|---|---|
-| eCIO | Nonprofit-only RIA · Madison WI · CRD# 301432 · getecio.com · Standing behavioral flag active |
 
 ---
 

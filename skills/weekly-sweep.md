@@ -131,22 +131,39 @@ Run these queries every sweep. Each channel has a purpose and a set of search st
 
 ---
 
-### Channel 10 — Hawaii-specific signals
-**Purpose:** What is happening in Farther's home market?
-**Queries:**
-- `"Morgan Stanley" OR "UBS" OR "Mariner" Hawaii advisor 2026`
-- LinkedIn Ad Library: Morgan Stanley Hawaii, UBS Hawaii, Mariner Hawaii
-- `"institutional RFP" OR "endowment" OR "foundation" Hawaii 2026`
-- `"Board Governance Workshop" OR "New Endowment Partnership" Hawaii`
+### Channel 10 — Campaign and messaging signals
+**Purpose:** Are any rivals running a coordinated outbound campaign targeting nonprofit audiences?
+A single article is Channel 4. A coordinated campaign — sustained theme across multiple surfaces
+within 60 days — is this channel. The question is not "did they publish content" but
+"are they trying to own a narrative right now?"
 
-**Fires when:** Any Hawaii-specific activity from the three local competitors
-**Switch signal rule:** Any Hawaii advisor hire or departure — always High Priority
+**Queries:**
+- `site:[competitor domain] "newsletter" OR "webinar" OR "register" OR "upcoming event" nonprofit 2026`
+- `"[firm name]" nonprofit webinar OR "virtual event" OR "roundtable" 2026`
+- `"[firm name]" newsletter endowment OR foundation OR "investment committee" 2026`
+- Webinar landing pages: check top 10 Tier A firms for active registrations or recorded replays
+
+<!--
+LINKEDIN SPONSORED CONTENT — PENDING APIFY ENTERPRISE ACCESS
+When Apify is available, add:
+- LinkedIn Ad Library: search each Tier A firm for active nonprofit-targeted sponsored posts
+- Flag: ad copy themes, CTA type (gated download / event registration / direct contact),
+  estimated run duration, targeting signals if visible
+Status: waiting on confirmation of Farther enterprise Apify account
+Do not activate until confirmed.
+-->
+
+**Fires when:** Any of the 50 firms has 2+ active campaign surfaces (webinar + newsletter,
+email capture + content series, etc.) running a shared nonprofit theme within a 60-day window
+**Single surface:** Log in profile, do not fire — route to Channel 4 instead
+**Coordinated campaign:** High Priority · Always flag for behavioral-pattern-analysis.md
+**Profile action:** Document surfaces observed, theme, estimated start date, CTA type (gated/ungated/event)
 
 ---
 
 ### Channel 11 — Behavioral pattern cross-check
 **Purpose:** Do any new signals connect to known standing flags?
-**Action:** After running Channels 1–10, cross-reference all fired signals against behavioral flags in active profiles.
+**Action:** After running Channels 1–10, cross-reference all fired signals against behavioral flags in active profiles. Channel 10 campaign signals are especially likely to connect — a coordinated campaign is often the visible surface of a deeper strategic pattern.
 - eCIO: does any new signal fit the RFP funnel playbook?
 - Any other firm: does a new pattern emerge across 2+ signals?
 

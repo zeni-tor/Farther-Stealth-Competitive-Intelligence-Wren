@@ -16,7 +16,7 @@ All new eCIO signals are evaluated against this playbook, not as isolated data.
 
 **Contradiction** — public claims vs. observable evidence don't match
 **Funnel** — gated content = CRM capture. Document: what gate collects · ungated summary · buyer positioning
-**Market-shaping** — content redefines how nonprofits evaluate advisors in ways that favor eCIO
+**Market-shaping** — content redefines how nonprofits evaluate advisors in ways that structurally favor the publisher
 **Cross-channel** — same theme across website + LinkedIn + email within 60 days = coordinated campaign
 
 ## Confidence

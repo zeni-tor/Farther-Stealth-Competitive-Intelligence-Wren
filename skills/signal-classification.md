@@ -4,16 +4,18 @@ Triage every raw signal before output. Three questions:
 
 ## 1. Relevant?
 Discard if none apply:
-- Mentions eCIO by name or brand
+- Mentions any of the 50 monitored competitors by name or brand
 - Relates to nonprofit investment advisory, endowments, OCIO, or RFP activity
-- Involves eCIO personnel, content, clients, or filings
+- Involves personnel, content, clients, or filings from any monitored firm
 
 If uncertain → flag `RELEVANCE: Uncertain`, pass through with note.
 
 ## 2. Signal type?
-`RFP` · `Client` · `Content` · `LinkedIn` · `ADV` · `Behavioral`
+`RFP` · `Client` · `Content` · `LinkedIn` · `ADV` · `Behavioral` · `Campaign`
 
 If spans multiple → classify by primary action, note secondary.
+Campaign vs. Content: a single published piece is `Content`. Two or more surfaces
+running a shared nonprofit theme within 60 days is `Campaign`.
 
 ## 3. Priority?
 
@@ -21,9 +23,10 @@ If spans multiple → classify by primary action, note secondary.
 - Named client win announced
 - New gated asset published (always flag for behavioral-pattern-analysis)
 - Content coaching nonprofits to skip/reframe RFP process
-- New RFP response or public RFP issued to eCIO found
+- New RFP response or public RFP issued to any monitored firm found
 - New hire or departure at director level+
 - ADV shows 20%+ change in charitable org client count
+- Coordinated campaign detected: 2+ surfaces, shared nonprofit theme, within 60 days (always flag for behavioral-pattern-analysis)
 
 **Medium** — any of (Tier 1 only):
 - New article, guide, webinar, market commentary

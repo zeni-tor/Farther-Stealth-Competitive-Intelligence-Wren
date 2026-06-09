@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wren · Weekly Intelligence Brief · June 6, 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg: #f5f4ef;
+  --surface: #ffffff;
+  --ink: #1c1c18;
+  --ink-mid: #5a5a52;
+  --ink-dim: #9a9a90;
+  --rule: #ddddd4;
+  --rule-dark: #b8b8ac;
+  --wren: #3d6b4f;
+  --wren-light: #edf4ef;
+  --wren-mid: #c0d9c8;
+  --alert-red: #8b2e2e;
+  --alert-red-bg: #fdf2f2;
+  --alert-red-rule: #e8c4c4;
+  --amber: #7a5200;
+  --amber-bg: #fdf8ee;
+  --amber-rule: #e8d8a0;
+  --blue: #1e3d6b;
+  --blue-bg: #f0f4fb;
+  --blue-rule: #b8ccec;
+  --mono: 'DM Mono', monospace;
+  --serif: 'Spectral', Georgia, serif;
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 15px;
+  line-height: 1.75;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.masthead {
+  background: var(--ink);
+  color: #f5f4ef;
+  padding: 36px 56px 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.masthead-left .wren-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--wren);
+  margin-bottom: 6px;
+}
+.masthead-left h1 {
+  font-size: 24px;
+  font-weight: 300;
+  font-style: italic;
+  color: #f5f4ef;
+  line-height: 1.2;
+}
+.masthead-right {
+  text-align: right;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #6a6a60;
+  line-height: 1.9;
+}
+
+.stats-bar {
+  background: #252520;
+  padding: 10px 56px;
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  align-items: center;
+  border-bottom: 1px solid #3a3a30;
+}
+.stat {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: #6a6a60;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.stat .n { color: #f5f4ef; font-size: 13px; font-weight: 500; }
+.stat-div { width: 1px; height: 14px; background: #3a3a30; }
+
+.wren-note {
+  background: var(--wren-light);
+  border-left: 3px solid var(--wren);
+  padding: 14px 56px;
+  font-size: 13px;
+  color: var(--wren);
+  font-family: var(--mono);
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.wren-note .label { font-weight: 500; white-space: nowrap; margin-top: 1px; }
+
+.body { max-width: 860px; margin: 0 auto; padding: 44px 56px 80px; }
+
+.layer { margin-bottom: 52px; }
+.layer-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+}
+.layer-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 3px;
+}
+.tag-national { background: var(--ink); color: #f5f4ef; }
+.tag-hawaii { background: var(--wren); color: #f5f4ef; }
+.tag-field { background: var(--blue); color: #f5f4ef; }
+.layer-name { font-size: 20px; font-weight: 400; color: var(--ink); }
+.layer-sub {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  margin-bottom: 20px;
+  padding-left: 2px;
+}
+.layer-rule { height: 1px; background: var(--ink); margin-bottom: 24px; }
+
+.competitor { margin-bottom: 36px; }
+.comp-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--rule-dark);
+}
+.comp-name { font-size: 16px; font-weight: 500; color: var(--ink); }
+.comp-aka { font-family: var(--mono); font-size: 11px; color: var(--ink-dim); }
+.comp-count {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  padding: 2px 8px;
+  border-radius: 3px;
+}
+
+.finding {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 16px;
+}
+.finding:last-child { border-bottom: none; }
+.finding-meta { padding-top: 2px; }
+.cert-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 3px 6px;
+  border-radius: 3px;
+  display: inline-block;
+  margin-bottom: 6px;
+  border: 1px solid transparent;
+}
+.c-confirmed { background: #edf4ef; color: #2a5c3a; border-color: #b0d4bc; }
+.c-inferred  { background: var(--amber-bg); color: var(--amber); border-color: var(--amber-rule); }
+.c-speculative { background: var(--blue-bg); color: var(--blue); border-color: var(--blue-rule); }
+.c-flag { background: var(--alert-red-bg); color: var(--alert-red); border-color: var(--alert-red-rule); }
+.c-gap { background: #f5f4ef; color: var(--ink-dim); border-color: var(--rule); }
+
+.finding-priority {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+}
+.p-high { color: var(--alert-red); }
+.p-medium { color: var(--amber); }
+.p-low { color: var(--ink-dim); }
+
+.finding-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+.finding-desc {
+  font-size: 13px;
+  color: var(--ink-mid);
+  line-height: 1.65;
+  margin-bottom: 6px;
+}
+.finding-desc em { font-style: italic; color: var(--ink); }
+.finding-source {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--ink-dim);
+}
+.finding-source a { color: var(--blue); text-decoration: none; }
+.finding-source a:hover { text-decoration: underline; }
+.finding-action {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--amber);
+  font-family: var(--mono);
+  padding: 6px 10px;
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-rule);
+  border-radius: 3px;
+  line-height: 1.5;
+}
+.finding-action strong {
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.gap-box {
+  background: var(--bg);
+  border: 1px dashed var(--rule-dark);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-bottom: 12px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-dim);
+  line-height: 1.7;
+}
+.gap-box strong {
+  color: var(--ink-mid);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+  margin: 28px 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule);
+}
+
+.slack-preview {
+  background: #1a1d21;
+  border-radius: 8px;
+  padding: 24px 28px;
+  margin-bottom: 48px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #d1d2d3;
+  line-height: 1.8;
+}
+.slack-preview .slack-header {
+  font-size: 11px;
+  color: #6a6a70;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.slack-channel { color: #4a9eda; }
+.slack-bot { color: #7c8b9a; }
+.slack-preview .bold { color: #ffffff; font-weight: 500; }
+.slack-preview .green { color: #4CAF7A; }
+.slack-preview .amber { color: #e8a44a; }
+.slack-preview .red { color: #e07070; }
+.slack-preview .dim { color: #6a6a70; }
+.slack-divider { border: none; border-top: 1px solid #2e3238; margin: 12px 0; }
+
+footer {
+  background: var(--ink);
+  color: #5a5a52;
+  padding: 20px 56px;
+  font-family: var(--mono);
+  font-size: 11px;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+footer span { color: var(--wren); }
+
+.client-table { width: 100%; border-collapse: collapse; font-size: 13px; margin-top: 4px; }
+.client-table th { text-align: left; font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-dim); padding: 8px 12px; border-bottom: 2px solid var(--rule-dark); background: var(--bg); }
+.client-table td { padding: 10px 12px; border-bottom: 1px solid var(--rule); color: var(--ink-mid); vertical-align: top; line-height: 1.5; font-size: 13px; }
+.client-table td:first-child { color: var(--ink); font-weight: 500; }
+.client-table tr:last-child td { border-bottom: none; }
+.client-table tr:hover td { background: var(--surface); }
+
+</style>
+</head>
+<body>
+
+<div class="masthead">
+  <div class="masthead-left">
+    <div class="wren-name">Wren · Stealth Competitor Intelligence</div>
+    <h1>Weekly Intelligence Brief</h1>
+  </div>
+  <div class="masthead-right">
+    Week of May 31 – June 6, 2026<br>
+    Farther Institutional · Internal use only<br>
+    Honesty standard: Confirmed / Inferred / Speculative
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><span class="n">27</span> signals processed</div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="n">6</span> High</div>
+  <div class="stat"><span class="n">9</span> Medium</div>
+  <div class="stat"><span class="n">8</span> Low</div>
+  <div class="stat"><span class="n">4</span> Discarded</div>
+  <div class="stat-div"></div>
+  <div class="stat"><span class="n">50</span> competitors monitored</div>
+  <div class="stat"><span class="n">2</span> behavioral flags active</div>
+</div>
+
+<div class="wren-note">
+  <div class="label">Wren —</div>
+  <div>Loud week. A coordinated endowment &amp; foundation consolidation wave fired across three Tier&nbsp;A firms in six weeks (CAPTRUST, Cerity, Fiducient), a senior E&amp;F practice leader changed teams, and the Bank of America "OCIO 2.0" flag is now upgraded to Active on a confirmed consolidation-displacement article. This is also the first Hawaii sweep and the first sweep of BofA and CAPTRUST — those sections establish baselines and correct two prior assumptions (Mariner has no Hawaii office; the Mariner–State Street item is a tech partnership, not an acquisition). Several headline figures are firm-self-reported (AUM, the Chestnut OCIO survey rankings) and are labeled Inferred until a primary third-party source is pulled. LinkedIn Ad Library and most Form ADV brochures were not machine-accessible this sweep — noted as gaps, not findings.</div>
+</div>
+
+<div class="body">
+
+  <!-- SLACK PREVIEW -->
+  <div class="section-label">Slack summary — delivered to #institutional-intel</div>
+  <div class="slack-preview">
+    <div class="slack-header">
+      <span class="slack-channel">#institutional-intel</span>
+      <span class="slack-bot">Wren · Today at 8:02 AM HST</span>
+    </div>
+    <div><span class="bold">🪶 Wren · Weekly Brief · June 6, 2026</span></div>
+    <div><span class="dim">Signals fired: 23 across 13 firms · 6 High · 9 Medium · 8 Low</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">eCIO</span> <span class="dim">(Layer 1)</span></div>
+    <div><span class="red">🔴 High</span> — RFP funnel (FLAG-001) fully re-confirmed: skip-the-RFP coaching + private RFP portal still co-promoted. No strategy shift. <span class="dim">getecio.com</span></div>
+    <div><span class="amber">🟡 Medium</span> — Two possible new client wins surfaced on LinkedIn (Tucson IDA; Perinatal Foundation) — unverified. <span class="dim">LinkedIn</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Bank of America</span></div>
+    <div><span class="red">🔴 High</span> — FLAG-002 → ACTIVE. "Should Nonprofits Consolidate OCIO Providers?" explicitly recommends a single OCIO ("best practice"). Pairs with the Apr 7 "OCIO 2.0" release. <span class="dim">privatebank.bankofamerica.com</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">CAPTRUST</span></div>
+    <div><span class="red">🔴 High</span> — Acquired Stillwater Capital Advisors ($1.25B, serves E&amp;F), closed May 14. Carnegie ($7.5B) still only "in talks" — unconfirmed. <span class="dim">captrust.com</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Cerity Partners</span></div>
+    <div><span class="red">🔴 High</span> — Verus Investments merger closed Mar 31 (~$1.2T institutional AUA, serves nonprofits). PE-backed mega-RIA now has a 40-yr institutional arm. <span class="dim">prnewswire.com</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Fiducient Advisors / Wealthspire</span></div>
+    <div><span class="red">🔴 High</span> — Acquiring Sellwood Investment Partners ($11B, E&amp;F-centric), announced Apr 22; also bought Axia (Apr 7). Fiducient brand sunsetting into "Wealthspire Institutional." <span class="dim">businesswire.com</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Glenmede ← Brown Advisory</span></div>
+    <div><span class="red">🔴 High</span> — Glenmede hired Brigid Peterson as Director of Endowments &amp; Foundations (16 yrs at Brown Advisory, led its E&amp;F practice). <span class="dim">mychesco.com</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Field signals</span></div>
+    <div><span class="amber">🟡 Medium</span> — Morgan Stanley named #1 U.S. OCIO ($246.9B, Chestnut survey). BlackRock + Mercer + BofA all speaking in NACUBO Endowment Leadership Series. <span class="dim">nacubo.org</span></div>
+    <div><span class="green">🟢 Low</span> — Cambridge Associates won a 2026 OCIO award — but it's the family-wealth segment, not nonprofit. Mariner sold its Advisor Network to LPL (Apr 14). <span class="dim">multiple</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="bold">Hawaii</span> <span class="dim">(first baseline sweep)</span></div>
+    <div><span class="green">🟢 Low</span> — MS Hawaii Planning Group ($3.0B, 21 staff, 4× Forbes Best-in-State) and UBS Ascendant (#8 Forbes 2026) confirmed. Mariner has NO Hawaii office; "Reset" podcast does not exist. No advisor moves this week. <span class="dim">advisor.morganstanley.com · advisors.ubs.com</span></div>
+    <hr class="slack-divider">
+
+    <div><span class="dim">Full report attached · Next sweep: June 12, 2026 · Questions: mention @Wren</span></div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- LAYER: NATIONAL — eCIO (Layer 1) -->
+  <!-- ============================================================ -->
+  <div class="layer">
+    <div class="layer-header">
+      <div class="layer-tag tag-national">National · Layer 1</div>
+      <div class="layer-name">eCIO, Inc.</div>
+    </div>
+    <div class="layer-sub">getecio.com · Madison, WI · CRD# 301432 · nonprofit-only RIA · standing flag FLAG-001 active</div>
+    <div class="layer-rule"></div>
+
+    <!-- SECTION 1 — RFP ACTIVITY -->
+    <div class="section-label">Section 1 — RFP Activity</div>
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-flag">⚑ Pattern</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">RFP funnel (FLAG-001) fully re-confirmed — dual-track contradiction still live</div>
+          <div class="finding-desc">The skip-the-RFP coaching content and the private RFP submission portal remain live and co-promoted. The resource center carries <em>"The Alternative to an Investment Management RFP," "Should You Issue an RFP to Select Your Next Nonprofit Investment Advisor?"</em> and <em>"How to Conduct Finalist Interviews,"</em> while the portal invites nonprofits to book a "Free RFP Consultation" before submitting. SAM.gov still returns zero eCIO-issued or eCIO-named solicitations (step 5 holds). The pattern indicates no strategy shift since the prior sweep — steps 2, 3, 4 and 5 of the playbook all re-confirmed from primary sources.</div>
+          <div class="finding-source">Source: <a href="https://www.getecio.com/submit-an-investment-management-request-for-proposal-rfp">getecio.com/submit-an-investment-management-request-for-proposal-rfp</a> · <a href="https://getecio.com/resource-center/home">getecio.com/resource-center</a> · SAM.gov (zero results) · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Gated RFP template still feeds the mailing list (lead-capture step intact)</div>
+          <div class="finding-desc">The guide <em>"How to Create an Investment Management RFP for Nonprofit Organizations with Sample RFP Template"</em> ends in a download form tied to "Subscribe to our mailing list," and the /landing/rfp-template-download page confirms gating ("check your email for a link to the RFP resource you requested"). The template embeds eCIO's own evaluation criteria — buyer conditioning consistent with step 3. The exact gate fields were not rendered to the fetcher; the name/email/org baseline is assumed, not re-verified this sweep.</div>
+          <div class="finding-source">Source: <a href="https://getecio.com/resources/how-to-create-an-investment-management-rfp-for-nonprofit-organizations">getecio.com/resources/how-to-create-an-investment-management-rfp…</a> · <a href="https://www.getecio.com/landing/rfp-template-download">getecio.com/landing/rfp-template-download</a> · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 2 — CLIENT LIST -->
+    <div class="section-label">Section 2 — Client List</div>
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-speculative">Speculative</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Possible new client — Tucson Industrial Development Authority (AZ)</div>
+          <div class="finding-desc">An eCIO LinkedIn post (read as ~1 day old at fetch time) announces a partnership to build "a sustainable investment program" with the Tucson IDA. We cannot confirm — the post is a single volatile source with no independent corroboration. If real, it would be a named client outside the known GLAEF / Hawaii set and a non-traditional nonprofit (a development authority), which may indicate eCIO is widening its target profile.</div>
+          <div class="finding-source">Source: <a href="https://www.linkedin.com/company/getecio">eCIO LinkedIn — post visible ~early June 2026</a> · retrieved 2026-06-06 · <em>unverified</em></div>
+          <div class="finding-action">
+            <strong>Worth considering</strong>
+            Should Wren attempt a primary-post capture next sweep to confirm or drop the Tucson IDA and Perinatal Foundation leads before they harden into "client" claims?
+          </div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-speculative">Speculative</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Possible new client — Perinatal Foundation (Madison, WI)</div>
+          <div class="finding-desc">A search snippet attributed an eCIO LinkedIn post stating the team is "honored to work with the Perinatal Foundation in managing a long-term investment program." This did not appear in the live LinkedIn feed and is not independently corroborated. A Madison-local win would reinforce eCIO's home-market base. Treat as unverified until a primary post is captured.</div>
+          <div class="finding-source">Source: search result referencing <a href="https://www.linkedin.com/company/getecio">eCIO LinkedIn</a> · post date unknown · retrieved 2026-06-06 · <em>unverified</em></div>
+        </div>
+      </div>
+      <div class="gap-box">
+        <strong>Baseline note — client list</strong>
+        No change to the confirmed list. GLAEF (Kerry Franco testimonial) remains live on the homepage; the logo carousel also shows EZRide, St. Johns Riverkeeper, Odyssey House, and Houston Arboretum among "40+" orgs — all self-reported by eCIO, not independently verified. The Hawaii inferences (University of Hawaii Foundation, Honolulu Museum of Art) were not re-confirmed this sweep.
+      </div>
+    </div>
+
+    <!-- SECTION 3 — THOUGHT LEADERSHIP -->
+    <div class="section-label">Section 3 — Thought Leadership</div>
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Monthly market-commentary cadence intact — "Market in a Minute" May 2026 published</div>
+          <div class="finding-desc">The "Market in a Minute May 2026" video featuring Rob Roquitte, CFA is live, posted to LinkedIn in early June, alongside a steady stream of governance/RFP content (IPS, gift-acceptance policy, investment committee, alternatives, governance calendar). The monthly Roquitte cadence continues on schedule. No new gated asset beyond the known RFP template was found; the former "intro-kit" landing page now 301-redirects to the homepage — possibly a retired gated asset.</div>
+          <div class="finding-source">Source: <a href="https://getecio.com/resource-center/home">getecio.com/resource-center</a> · <a href="https://www.linkedin.com/company/getecio">eCIO LinkedIn</a> · commentary labeled May 2026 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 4 — BEHAVIORAL PATTERNS / eVestech -->
+    <div class="section-label">Section 4 — Behavioral Patterns (eVestech track)</div>
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">No new 2026 eVestech RIA licensee found — platform monetization continues, no fresh signal</div>
+          <div class="finding-desc">eVestech is still sold as a white-labeled, monthly-subscription SaaS to "consultants, advisors and private equity firms." Named integrations/partners remain the previously-known ones (GreenHill Investment Reporting, Bridge, Clearstead Advisors) plus an eVestech Billing product — none dated 2026 in retrievable sources. The absence of a new logo is itself the signal: the suspected aggregator/marketplace expansion did not advance visibly this sweep. Worth a dedicated check next sweep.</div>
+          <div class="finding-source">Source: <a href="https://www.evestech.com/about-evestech">evestech.com/about-evestech</a> · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- LAYER: RECOGNIZED COMPETITOR FIELD -->
+  <!-- ============================================================ -->
+  <div class="layer">
+    <div class="layer-header">
+      <div class="layer-tag tag-field">Field · 50-firm list</div>
+      <div class="layer-name">Recognized Competitor Field</div>
+    </div>
+    <div class="layer-sub">Signals that fired across Tiers A–C this sweep · M&amp;A · hires · awards · conferences · behavioral</div>
+    <div class="layer-rule"></div>
+
+    <!-- BANK OF AMERICA -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Bank of America</div>
+        <div class="comp-aka">Merrill / Private Bank · Tier B · first sweep</div>
+        <div class="comp-count">FLAG-002 → Active</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-flag">⚑ Pattern</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">FLAG-002 upgraded Watching → Active: confirmed OCIO-consolidation displacement play</div>
+          <div class="finding-desc">The companion article flagged last sweep was retrieved: <em>"Should Nonprofits Consolidate Outsourced CIO Providers?"</em> explicitly advises nonprofits to reduce to a single OCIO — "choosing a single OCIO provider remains a best practice… a unified OCIO gives you clarity, control and cohesion" — and warns that splitting endowments across providers leaves "no one… responsible for stewarding the entire portfolio" (quoting Bernard Reidy, BofA Private Bank). This pairs with the April 7 "OCIO 2.0" press release selling expanded governance/spending/fundraising capabilities. Together they form a coordinated consolidate-to-the-largest-provider narrative that structurally favors BofA over boutique advisors. The "new standard" framing lives in the release, the "pick one (us)" mechanism in the article. One of two upgrade tests met (advises reducing # of advisors); enough to make this Active.</div>
+          <div class="finding-source">Source: <a href="https://www.privatebank.bankofamerica.com/articles/should-nonprofits-consolidate-ocio-providers.html">privatebank.bankofamerica.com/articles/should-nonprofits-consolidate-ocio-providers</a> (undated) · <a href="https://newsroom.bankofamerica.com/content/newsroom/press-releases/2026/04/bank-of-america-named-no--1-nonprofit-ocio-provider-globally-in-.html">newsroom.bankofamerica.com</a> · 2026-04-07 · retrieved 2026-06-06</div>
+          <div class="finding-action">
+            <strong>Worth considering</strong>
+            Does Farther Institutional want a counter-narrative for boards being told that "more than one advisor = no accountability"? The boutique answer (focused stewardship, no conflicts) is the natural rebuttal.
+          </div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-inferred">Inferred</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">"#1 nonprofit OCIO globally, $79.2B" — third-party ranking, primary survey not yet pulled</div>
+          <div class="finding-desc">The April 7 release states BofA was named No. 1 OCIO provider to nonprofits globally with $79.2B nonprofit AUM, per the 2025 Global OCIO Survey by the Chestnut Solutions Institute (released Jan 2026). The $79.2B figure is self-reported; the ranking is third-party but the Chestnut survey itself was not directly retrieved. Treat as Inferred until the primary survey is obtained — do not present as independently verified.</div>
+          <div class="finding-source">Source: <a href="https://newsroom.bankofamerica.com/content/newsroom/press-releases/2026/04/bank-of-america-named-no--1-nonprofit-ocio-provider-globally-in-.html">newsroom.bankofamerica.com</a> · 2026-04-07 · retrieved 2026-06-06 · Chestnut survey not directly retrieved</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAPTRUST -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">CAPTRUST</div>
+        <div class="comp-aka">Tier C (#9) · aggressive acquirer · first sweep</div>
+        <div class="comp-count">WATCH-001</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Acquired Stillwater Capital Advisors ($1.25B) — explicitly serves endowments &amp; foundations</div>
+          <div class="finding-desc">CAPTRUST added Stillwater Capital Advisors (Devon, PA; $1.25B AUM), a firm that explicitly serves "endowments and foundations" alongside individuals and small businesses, extending CAPTRUST's E&amp;F footprint into a fifth Pennsylvania office. This confirms the open thread and is direct overlap with Farther Institutional's target market. (CAPTRUST's broader 2026 slate — Meritage Feb 4, Alpha Cubed Feb 11, Suncoast Feb 25 — falls outside the window and is not E&amp;F-flagged.)</div>
+          <div class="finding-source">Source: <a href="https://www.captrust.com/news/captrust-grows-with-the-addition-of-stillwater-capital-advisors/">captrust.com/news/…stillwater-capital-advisors</a> · 2026-05-14 (corroborated by ThinkAdvisor/AdvisorHub/WealthManagement) · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-speculative">Speculative</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Carnegie Investment Counsel ($7.5B) — still only "in talks," not confirmed</div>
+          <div class="finding-desc">CAPTRUST was reported "in talks" to acquire $7.5B Carnegie Investment Counsel (Citywire, sources-based, Feb 2). No closing or official confirmation found as of June 6, and Carnegie does <em>not</em> appear on CAPTRUST's official 2026 news page. This is a rumor, not a closed transaction — the prior open thread should be downgraded to "talks, unverified," not reported as done. With Stillwater (E&amp;F) now confirmed closed, WATCH-001 stays Watching; escalation to Active requires either Carnegie confirmed or a third nonprofit-specialist acquired within 12 months.</div>
+          <div class="finding-source">Source: <a href="https://citywire.com/ria/news/captrust-in-talks-to-acquire-7-5bn-carnegie-investment-counsel-sources/a2483015">citywire.com (paywalled, headline/date only)</a> · 2026-02-02 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CERITY PARTNERS -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Cerity Partners</div>
+        <div class="comp-aka">Tier B (#13) · PE-backed (Genstar) · new profile</div>
+        <div class="comp-count">WATCH-002</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Verus Investments merger closed March 31 — adds a 40-year institutional arm serving nonprofits</div>
+          <div class="finding-desc">Cerity Partners merged with Verus Investments (~$1.2T institutional AUA), announced Feb 11 and closed March 31, 2026. Verus has served "nonprofits, corporations, public, and multiemployer plans" for 40+ years. A PE-backed mega-RIA now has a deep institutional consulting arm explicitly serving nonprofits/endowments — a materially stronger direct competitor. WATCH-002 (rapid expansion) stays Watching; the criterion "explicit nonprofit OCIO service line" is now arguably met via the Verus arm — flag for review next sweep.</div>
+          <div class="finding-source">Source: <a href="https://www.prnewswire.com/news-releases/cerity-partners-welcomes-verus-investments-expanding-its-offering-to-institutional-and-wealth-clients-302684355.html">prnewswire.com</a> · <a href="https://ceritypartners.com/news/cerity-partners-welcomes-verus-investments/">ceritypartners.com</a> · announced 2026-02-11, closed 2026-03-31 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FIDUCIENT / WEALTHSPIRE -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Fiducient Advisors</div>
+        <div class="comp-aka">Tier A (#36) · sunsetting into "Wealthspire Institutional" · new profile</div>
+        <div class="comp-count">2 deals</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Acquiring Sellwood Investment Partners ($11B) — endowment/foundation-centric</div>
+          <div class="finding-desc">Fiducient (under Wealthspire) agreed to acquire Portland, OR-based Sellwood Investment Partners ($11B total assets as of 12/31/2025), which serves "endowments, foundations, 529/529A plans, retirement plans, and HNW individuals." Announced April 22 — one of the most directly relevant deals this sweep. Note: the release does not explicitly call Sellwood's service "OCIO"; discretionary-OCIO capability is described at the Wealthspire Institutional platform level (Inferred, not Confirmed, that Sellwood itself runs OCIO).</div>
+          <div class="finding-source">Source: <a href="https://www.businesswire.com/news/home/20260422027089/en/Wealthspires-Fiducient-Advisors-to-Acquire-Sellwood-Investment-Partners">businesswire.com</a> · <a href="https://www.wealthspire.com/news/wealthspire-s-fiducient-advisors-to-acquire-sellwood-investment-partners/">wealthspire.com</a> · 2026-04-22 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Also acquired Axia Advisory (~$1.9B) — two institutional deals in one month</div>
+          <div class="finding-desc">Fiducient/Wealthspire also acquired Indianapolis retirement-plan consultant Axia Advisory (~$1.9B AUM/AUS), announced April 7–8. Retirement-plan focused rather than pure E&amp;F, but the back-to-back deals show an aggressive 2026 roll-up pace. The Fiducient brand is reported to be sunsetting in 2026 under "Wealthspire Institutional" (~$580B combined, ~350 institutional professionals — self-reported, per Fiducient's Dec 18, 2025 release). Track for client/mandate migration.</div>
+          <div class="finding-source">Source: <a href="https://www.fin-news.com/2026/04/07/wealthspires-fiducient-advisors-acquires-axia-advisory/">fin-news.com</a> · <a href="https://www.ai-cio.com/news/ocio-fiducient-advisors-acquires-plan-consultant-axia-advisory/">ai-cio.com</a> · 2026-04-07 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GLENMEDE / BROWN ADVISORY -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Glenmede &nbsp;←&nbsp; Brown Advisory</div>
+        <div class="comp-aka">Tier A (#38 gains · #33 loses) · new profile</div>
+        <div class="comp-count">Channel 6</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Glenmede hired Brigid Peterson as Director of Endowments &amp; Foundations — from Brown Advisory</div>
+          <div class="finding-desc">Glenmede hired Brigid Peterson to expand its OCIO and institutional advisory business serving nonprofits. She joins from Brown Advisory, where she spent 16 years and most recently led the firm's endowments &amp; foundations practice. A senior E&amp;F practice leader moving between two Tier A competitors: it signals Glenmede is actively investing in nonprofit/endowment OCIO growth and creates a leadership gap at Brown Advisory's E&amp;F practice. Both are direct Farther competitors.</div>
+          <div class="finding-source">Source: <a href="https://www.mychesco.com/a/news/regional/glenmede-hires-brown-advisory-executive-for-ocio-growth/">mychesco.com</a> · 2026-05-19 · retrieved 2026-06-06</div>
+          <div class="finding-action">
+            <strong>Worth considering</strong>
+            Brown Advisory's E&amp;F practice now has a leadership gap — a possible recruiting or client-displacement window worth watching over the next two quarters.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MORGAN STANLEY (INSTITUTIONAL) -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Morgan Stanley Institutional</div>
+        <div class="comp-aka">Tier C (#5) · also Hawaii layer</div>
+        <div class="comp-count">Channel 5</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Named #1 U.S. OCIO ($246.9B) in inaugural Chestnut OCIO Market Leader Awards</div>
+          <div class="finding-desc">Morgan Stanley ranked #1 U.S. OCIO provider with $246.9B U.S. OCIO AUM in the inaugural Chestnut Institute OCIO Market Leader Awards (2025 Global OCIO Study), announced Jan 23, plus seven other category recognitions. This is the U.S.-overall ranking, distinct from BofA's nonprofit-specific #1 — both cite the same Chestnut survey, so they are not contradictory. AUM is the firm's reported figure. Establishes Chestnut Solutions Institute as the 2026 authority both top OCIO firms are citing.</div>
+          <div class="finding-source">Source: <a href="https://www.businesswire.com/news/home/20260123847535/en/">businesswire.com</a> · <a href="https://www.morganstanley.com/press-releases/morgan-stanley-us-ocio-market-leader-award-2026">morganstanley.com</a> · 2026-01-23 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONFERENCE PRESENCE -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Conference &amp; Event Presence</div>
+        <div class="comp-aka">Channel 7 · NACUBO Endowment Leadership Series + Annual Meeting</div>
+        <div class="comp-count">3+ firms</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">BlackRock, Mercer, and Bank of America all speaking in NACUBO Endowment Leadership Series</div>
+          <div class="finding-desc">Confirmed 2026 speakers in NACUBO's online Endowment Leadership Series (Feb–Mar): <em>BlackRock</em> — Edward Ng &amp; Ned Rosenman ("The New Regime in Endowment Portfolios"); <em>Mercer</em> — Cori Trautvetter ("Refining the Endowment Model"); <em>Bank of America</em> — William Jarvis. Two corrections to prior intel: Mercer's speaker is Cori Trautvetter (not "Texas Hemmaplardh"), and BofA's presence (Jarvis) is a new finding that reinforces FLAG-002 (multi-channel nonprofit push). Three major competitors are embedded directly in NACUBO's endowment education channel.</div>
+          <div class="finding-source">Source: <a href="https://www.nacubo.org/Events/2026/2026-Endowment-Leadership-Series">nacubo.org/Events/2026/2026-Endowment-Leadership-Series</a> · series Feb–Mar 2026 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Segal (Segal Marco Advisors) confirmed attending NACUBO Annual Meeting 2026</div>
+          <div class="finding-desc">Segal published a "NACUBO 2026 Annual Meeting — Mission Meets Moment" insights page confirming it will attend the July 18–21 Anaheim meeting; Segal offers Investment Solutions and higher-ed/endowment expertise. Role (booth/session) not specified — inferred to be a business-development presence. The official NACUBO 2026 exhibitor list is not publicly rendered (gated/JS) — no OCIO-firm sponsor/exhibitor could be confirmed for the Annual Meeting this sweep (coverage gap).</div>
+          <div class="finding-source">Source: <a href="https://www.segalco.com/consulting-insights/nacubo-2026-annual-meeting/">segalco.com/consulting-insights/nacubo-2026-annual-meeting</a> · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AWARDS / OTHER M&A -->
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Other field signals</div>
+        <div class="comp-aka">Cambridge Associates · Mariner · Goldman Sachs AM</div>
+        <div class="comp-count">3 firms</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Cambridge Associates won a 2026 OCIO award — but it is the family-wealth segment, not nonprofit</div>
+          <div class="finding-desc">Cambridge Associates won the 2026 Family Wealth Report "Outsourced CIO Award" (~May 4). Important qualifier: this is a private-client / family-wealth OCIO award, not institutional/endowment — the citation describes private-client/family-office solutions. The "Cambridge 2026 OCIO award" lead is real but does not pertain to the nonprofit/endowment segment. Flagging so it is not miscategorized as a nonprofit-OCIO win.</div>
+          <div class="finding-source">Source: <a href="https://www.cambridgeassociates.com/news/family-wealth-report-outsourced-cio-award-2026/">cambridgeassociates.com/news/family-wealth-report-outsourced-cio-award-2026</a> · 2026-05-04 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Mariner sold its Advisor Network to LPL ($31B) — and two prior assumptions corrected</div>
+          <div class="finding-desc">LPL (with Private Advisor Group) agreed to acquire Mariner Advisor Network ($31B AUM, 367 advisors) — Mariner is the <em>seller</em>, signaling a refocus on its core/employee channel (not nonprofit-specific). Two corrections to standing intel: (1) the Mariner–State Street item is a Charles River tech/platform partnership, <em>not</em> a State Street acquisition of Mariner; (2) Mariner has no Hawaii office and the "Reset" podcast does not exist (its podcast is "Your Life Simplified").</div>
+          <div class="finding-source">Source: <a href="https://www.lpl.com/news-media/press-releases/lpl-financial-leads-acquisition-of-mariner-advisor-network.html">lpl.com</a> · <a href="https://www.advisorhub.com/lpl-to-buy-mariners-31b-aum-network-business/">advisorhub.com</a> · 2026-04-14 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Goldman Sachs AM — Innovator acquisition closed + $25B Eli Lilly OCIO win (corporate, not nonprofit)</div>
+          <div class="finding-desc">GSAM completed its acquisition of Innovator Capital Management (defined-outcome ETFs, ~$31B; closed Apr 2) and won a $25B OCIO mandate from Eli Lilly. Both are in-window but the M&amp;A is ETF-focused and the OCIO win is corporate DB/DC, not nonprofit/endowment — low relevance to Farther's niche. Logged for context.</div>
+          <div class="finding-source">Source: <a href="https://www.goldmansachs.com/pressroom/press-releases/2026/goldman-sachs-completes-acquisition-of-innovator-capital-management">goldmansachs.com</a> · <a href="https://www.pionline.com/institutional-investors/outsourced-chief-investment-officer/pi-goldman-sachs-ocio-eli-lilly-embargo/">pionline.com</a> · 2026-04-02 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- LAYER: HAWAII -->
+  <!-- ============================================================ -->
+  <div class="layer">
+    <div class="layer-header">
+      <div class="layer-tag tag-hawaii">Hawaii</div>
+      <div class="layer-name">Local Competitors</div>
+    </div>
+    <div class="layer-sub">Morgan Stanley · UBS · Mariner · FIRST baseline sweep — most items establish "what exists" for future delta detection</div>
+    <div class="layer-rule"></div>
+
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Morgan Stanley</div>
+        <div class="comp-aka">Hawaii Planning Group</div>
+        <div class="comp-count">1 finding · first sweep</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Baseline confirmed — $3.0B, 21 staff, 4× Forbes Best-in-State, stated foundations/institutions focus</div>
+          <div class="finding-desc">Hawaii Planning Group is real — offices in Honolulu and Kahului (Maui); $3.0B client assets as of 3/31/2026; 21 members (14 FAs + 7 client-service); named Forbes Best-in-State Wealth Management Teams 2023–2026 (four consecutive years); co-founders include Leslie Hidaka. Stated focus includes "foundations, qualified retirement plans, and institutions" — which makes this team a direct competitor for Farther Institutional's endowment/nonprofit niche. AUM and staff counts are firm-self-reported; the Forbes streak is independently corroborated. This is the anchor to monitor for deltas.</div>
+          <div class="finding-source">Source: <a href="https://advisor.morganstanley.com/hawaii-planning-group">advisor.morganstanley.com/hawaii-planning-group</a> · AUM dated 3/31/2026 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">UBS</div>
+        <div class="comp-aka">Hawaii Ascendant Wealth Consultants</div>
+        <div class="comp-count">1 finding · first sweep</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Baseline confirmed — #8 Forbes 2026; suspected "switcher" lead form NOT confirmed</div>
+          <div class="finding-desc">The team is real (733 Bishop St, Suite 1600, Honolulu), led by Daniel Shiu (SVP &amp; UBS Hawaii Market Director), with John Miyamasu, Jenny Do, and associates; named #8 on the 2026 Forbes Best-in-State Wealth Management Teams (UBS release 4/30). Stated focus is business owners/entrepreneurs — <em>no</em> institutional/foundation/endowment focus stated. The suspected "switcher-segmentation lead form" could not be confirmed: only standard appointment/"request your report" forms were visible — flag for a manual gated-form review. Two other UBS Hawaii teams surfaced higher: The Megorden Group (#3) and Zenith Advisors (#22) — recommend adding to the watch list.</div>
+          <div class="finding-source">Source: <a href="https://advisors.ubs.com/hawaiiascendantwealth/">advisors.ubs.com/hawaiiascendantwealth</a> · <a href="https://www.stocktitan.net/news/UBS/34-ubs-advisor-teams-in-southern-california-and-hawaii-named-to-peegw1oisw40.html">UBS Forbes 2026 release (StockTitan mirror)</a> · 2026-04-30 · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="competitor">
+      <div class="comp-header">
+        <div class="comp-name">Mariner Wealth Advisors</div>
+        <div class="comp-aka">— no local Hawaii brand —</div>
+        <div class="comp-count">1 finding · first sweep</div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-confirmed">Confirmed</div>
+          <div class="finding-priority p-low">Low</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">Two standing assumptions corrected — Mariner has NO Hawaii office; the "Reset" podcast does not exist</div>
+          <div class="finding-desc">Mariner's official locations directory lists no Hawaii office (Idaho → Illinois, no HI). The "Reset" podcast appears to be a misattribution: Mariner's podcast is "Your Life Simplified" (hosts Dan Sharkey &amp; Whitney Reagan); there is a 2026 "financial reset" article but no "Reset" podcast. Recommend reclassifying Mariner as a national/watch-only entity for Hawaii purposes unless an office or remote-advisor push appears. (Separately, Mariner's notable in-window event was the LPL divestiture — see Field layer.)</div>
+          <div class="finding-source">Source: <a href="https://www.marinerwealthadvisors.com/locations/">marinerwealthadvisors.com/locations</a> · <a href="https://www.marinerwealthadvisors.com/podcast/">marinerwealthadvisors.com/podcast</a> · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="gap-box">
+        <strong>Hawaii activity this week</strong>
+        Channel 6 (Hawaii advisor moves): No activity detected — no 2026 advisor hires/departures at MS, UBS, or Mariner Hawaii. Channel 10 (RFPs / keywords "New Endowment Partnership," "Board Governance Workshop," "Institutional RFP Hawaii"): No activity detected. The University of Hawai'i Foundation publishes endowment market-value reports but no 2026 advisory RFP was located. <strong>Coverage gap:</strong> LinkedIn Ad Library is not machine-accessible — the suspected UBS Hawaii-only sponsored content could not be verified or refuted. Requires manual check; no ad data fabricated.
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- CHANNEL 11 — BEHAVIORAL CROSS-CHECK -->
+  <!-- ============================================================ -->
+  <div class="layer">
+    <div class="layer-header">
+      <div class="layer-tag tag-field">Channel 11</div>
+      <div class="layer-name">Behavioral Cross-Check</div>
+    </div>
+    <div class="layer-sub">All fired signals cross-referenced against standing flags · 1 flag upgraded · 1 new pattern watching</div>
+    <div class="layer-rule"></div>
+    <div class="competitor">
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-flag">⚑ Pattern</div>
+          <div class="finding-priority p-high">High</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">FLAG-002 (BofA OCIO consolidation) — UPGRADED Watching → Active</div>
+          <div class="finding-desc">The consolidation article test was met: BofA explicitly coaches nonprofits to reduce to a single OCIO. Combined with the "OCIO 2.0" capability-expansion release, this is a coordinated consolidate-to-the-largest-provider market-shaping play. Now an Active flag — all future BofA signals evaluated against it. Full entry written to behavioral_flags.md.</div>
+          <div class="finding-source">Source: privatebank.bankofamerica.com · newsroom.bankofamerica.com · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-flag">⚑ Pattern</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">FLAG-001 (eCIO RFP funnel) — re-confirmed, no strategy shift</div>
+          <div class="finding-desc">All five funnel steps re-confirmed from primary sources this sweep (gated template, skip-the-RFP coaching, embedded evaluation criteria, live submission portal, zero SAM.gov). New iteration logged. The two unverified LinkedIn client-win posts are adjacent "publicize the win" behavior, not the funnel itself.</div>
+          <div class="finding-source">Source: getecio.com (multiple paths) · SAM.gov · retrieved 2026-06-06</div>
+        </div>
+      </div>
+      <div class="finding">
+        <div class="finding-meta">
+          <div class="cert-badge c-speculative">Speculative</div>
+          <div class="finding-priority p-medium">Medium</div>
+        </div>
+        <div class="finding-body">
+          <div class="finding-title">New pattern watching (WATCH-003) — industry-wide E&amp;F consolidation wave</div>
+          <div class="finding-desc">Three Tier A firms expanded endowment/foundation capability via M&amp;A within ~6 weeks: CAPTRUST/Stillwater (May 14), Cerity/Verus (closed Mar 31), Fiducient-Wealthspire/Sellwood (Apr 22). The pattern indicates well-capitalized competitors are racing to consolidate boutique E&amp;F advisory scale — the same segment Farther Institutional serves. Pairs thematically with BofA's "consolidate to one OCIO" messaging (FLAG-002). Logged as WATCH-003; escalate if a fourth E&amp;F-relevant acquisition lands within the quarter.</div>
+          <div class="finding-source">Source: cross-channel synthesis of confirmed Channel 3 findings · retrieved 2026-06-06</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- CHANNELS WITH NO ACTIVITY -->
+  <!-- ============================================================ -->
+  <div class="layer">
+    <div class="section-label">Channels with no activity this sweep</div>
+    <div class="gap-box">
+      <strong>Quiet channels — a quiet channel is intelligence too</strong>
+      <strong style="margin-top:8px;">Channel 1 — Client wins:</strong> No NAMED in-window nonprofit/endowment OCIO mandate win by a listed competitor with a verifiable URL. (eCIO's two LinkedIn leads remain Speculative.)<br>
+      <strong>Channel 2 — RFP activity:</strong> No specific public nonprofit/endowment OCIO RFP issued or awarded Apr–Jun 2026 confirmed. One unidentified paywalled lead (FIN News "Investment Consultant Seeks E&amp;F Segment Leader," Apr 1) — firm name behind paywall; manual check recommended.<br>
+      <strong>Channel 9 — ADV / regulatory:</strong> No material ADV change confirmed. Cambridge Associates' Form ADV Part 2A (dated 3/30/2026) exists but its Material Changes section was not machine-readable. <strong>Coverage gap:</strong> SEC IAPD brochures are largely PDF/binary and not reliably parseable via fetch — recommend a manual IAPD pull for the top 10 Tier A firms.<br>
+      <strong>Discarded (4):</strong> TIAA / Medical College of Georgia $240M OCIO (2018), GEM co-CIO appointment (2025), Cambridge BD-team expansion (2020), L&amp;G / Queen's University Belfast (UK, off-list) — all out of window or off-scope.
+    </div>
+  </div>
+
+  <!-- PROFILES UPDATED / CREATED -->
+  <div class="layer">
+    <div class="section-label">Profiles updated &amp; created · files written</div>
+    <div class="gap-box">
+      <strong>Updated</strong>
+      ecio-profile.md · bank-of-america-profile.md (FLAG-002 → Active) · captrust-profile.md (Stillwater confirmed)<br>
+      <strong style="margin-top:8px;">Created</strong>
+      cerity-partners-profile.md · fiducient-advisors-profile.md · glenmede-profile.md · morgan-stanley-hawaii-profile.md · ubs-hawaii-profile.md · mariner-wealth-advisors-profile.md<br>
+      <strong style="margin-top:8px;">Reference files updated</strong>
+      data/behavioral_flags.md (FLAG-002 Active · FLAG-001 iteration · WATCH-003 added) · data/conferences.md (NACUBO speaker corrections + BofA Jarvis + Segal) · data/competitors.md (change-log corrections) · memory.md
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div><span>Wren</span> · Stealth Competitor Intelligence Agent · Farther Institutional</div>
+  <div>Honesty standard applied throughout · Read honesty.md before acting on findings</div>
+  <div>Generated 2026-06-06 · Next sweep: 2026-06-12</div>
+</footer>
+
+</body>
+</html>

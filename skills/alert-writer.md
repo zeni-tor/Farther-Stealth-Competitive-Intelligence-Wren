@@ -2,7 +2,7 @@
 
 ## Slack format (weekly summary)
 ```
-🔍 eCIO WEEKLY INTEL — Week of [DATE]
+🪶 Wren · Weekly Intelligence Brief — Week of [DATE]
 
 📋 RFP ACTIVITY
 • [finding — source]

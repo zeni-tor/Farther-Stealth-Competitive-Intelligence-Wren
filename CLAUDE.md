@@ -14,39 +14,16 @@ A quiet week is short. That is correct.
 
 ---
 
-## Layer 1: National competitor — eCIO
-**eCIO Inc** · Madison, WI · CRD# 301432 · getecio.com · linkedin.com/company/getecio
-Nonprofit-only RIA. OCIO provider. Built eVestech platform. ~$10K minimum.
-
-### Four report sections
-| # | Section | Sources | Signal to find |
-|---|---|---|---|
-| 1 | RFP Activity | getecio.com/rfp-resources, LinkedIn, SAM.gov | Public RFPs; RFP responses; skip-the-RFP coaching content |
-| 2 | Client List | Website testimonials, LinkedIn, IRS 990, ADV CRD# 301432 | Named orgs confirmed or inferred as clients |
-| 3 | Thought Leadership | getecio.com/resource-center, LinkedIn, YouTube | Articles, webinars, guides, market commentary, gated assets |
-| 4 | Behavioral Patterns | Cross-signal | Standing flag: see data/behavioral_flags.md FLAG-001 |
-
-### Standing behavioral flag
-Active — full details in `data/behavioral_flags.md` FLAG-001.
-All new eCIO signals evaluated against the known RFP funnel playbook.
-
----
-
-## Layer 2: Recognized competitor list — 50 firms
+## Recognized competitor list — 51 firms
 Full list with tiers, notes, and change log: `data/competitors.md`
-Read this file at the start of every sweep.sss
+Read this file at the start of every sweep.
 
 | Tier | Firms | Monitoring depth |
 |---|---|---|
-| A | #31–50 | Full weekly sweep — all 12 channels |
+| A | #31–51 | Full weekly sweep — all 12 channels |
 | B | #11–30 | High Priority signals only |
 | C | #1–10 | High Priority signals only |
-| Hawaii | Morgan Stanley · UBS · Mariner | Full weekly sweep — Channel 10 dedicated |
-
-### Key Hawaii signals
-- **Switch signal**: New hire announcements — Hawaii advisors move in teams immediately
-- **RFP keywords**: "New Endowment Partnership" · "Board Governance Workshop" · "Institutional RFP Hawaii"
-- **Ad transparency**: LinkedIn Ad Library — weekly check for Hawaii-only sponsored content
+| Hawaii | Morgan Stanley · UBS · Mariner | Full weekly sweep — signals surface via Channels 6 and 12 |
 
 ---
 

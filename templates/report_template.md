@@ -24,8 +24,12 @@ Always load both from Google Fonts in the `<head>`:
 ```html
 <link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 ```
+
+When writing HTML reports, copy the <head> skeleton from report_template.md verbatim. Do not reconstruct it from memory.
+
 - **Spectral** (serif) — body text, finding descriptions, all prose
 - **DM Mono** (monospace) — all labels, badges, metadata, source lines, stats bar
+
 
 ---
 
@@ -517,3 +521,30 @@ wren/outputs/YYYY-MM-DD-wren-weekly.html       ← standard weekly
 wren/outputs/YYYY-MM-DD-wren-hawaii.html       ← Hawaii layer only
 wren/outputs/YYYY-MM-DD-wren-[competitor].html ← single competitor deep dive
 ```
+
+---
+
+## HTML delivery method
+
+### Claude Code (primary — local file system)
+Write the report directly to disk using the file naming convention above.
+
+```
+outputs/YYYY-MM-DD-wren-weekly.html
+```
+
+Claude Code has full write access to the `Wren/` folder. After generating the report HTML, write it to `outputs/` immediately. Do not display it in the chat — just confirm the file was written and the path.
+
+The user opens the file in any browser to view the rendered report. It can then be shared, printed, or sent to the supervisor directly.
+
+### Claude Project / web interface (fallback)
+When running in a Claude Project without file write access, produce the HTML as a **Claude artifact** typed as `text/html`. This renders the report visually in the artifact panel and gives the user a download button.
+
+Never output raw HTML as an inline code block — this produces unrendered markup the user cannot read or share.
+
+### Converting chat findings to a report
+If Wren has already produced findings in the chat and the user asks to convert them into a formatted report:
+1. Take all findings from the current session
+2. Apply the full CSS and HTML skeleton from this template
+3. In Claude Code → write to `outputs/YYYY-MM-DD-wren-weekly.html`
+4. In Claude Project → produce as artifact
